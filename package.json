@@ -1,0 +1,22 @@
+{
+  "name": "ngraph.cw",
+  "version": "1.0.0",
+  "description": "Chinese Whispers Graph Clustering Algorithm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ngraph",
+    "clsutering",
+    "chinese",
+    "whispers",
+    "graph"
+  ],
+  "author": "Andrei Kashcha",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anvaka/ngraph.cw"
+  }
+}
