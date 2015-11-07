@@ -4,7 +4,7 @@
   "description": "Chinese Whispers Graph Clustering Algorithm",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap test/*.js"
   },
   "keywords": [
     "ngraph",
@@ -18,5 +18,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/anvaka/ngraph.cw"
+  },
+  "devDependencies": {
+    "miserables": "^1.0.0",
+    "ngraph.svg": "0.0.15",
+    "tap": "^2.2.0"
+  },
+  "dependencies": {
+    "ngraph.random": "0.0.1"
   }
 }

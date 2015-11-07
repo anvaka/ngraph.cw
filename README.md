@@ -1,6 +1,7 @@
-# ngraph.cw
+# ngraph.cw [![Build Status](https://travis-ci.org/anvaka/ngraph.cw.svg)](https://travis-ci.org/anvaka/ngraph.cw)
 
-Chinese Whispers Graph Clustering Algorithm
+[Chinese Whispers](http://wortschatz.uni-leipzig.de/~cbiemann/pub/2006/BiemannTextGraph06.pdf)
+graph clustering for [`ngraph`](https://github.com/anvaka/ngraph.graph)
 
 # install
 
