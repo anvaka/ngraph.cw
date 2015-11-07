@@ -9,6 +9,9 @@ I got algorithm converged for a graph with `200,000` nodes `500,000` edges after
 `8` iterations. Undirected graph with `2.2` million nodes, `4.5` million edges
 converged after `47` iterations.
 
+You can play with small graph (254 edges, 77 nodes) [here](https://anvaka.github.io/ngraph.cw/demo/).
+It should converge after 2 iterations.
+
 # usage
 
 ``` js
