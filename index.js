@@ -3,7 +3,7 @@ var createRandom = require('ngraph.random').random;
 
 module.exports = createChineseWhisper;
 
-function createChineseWhisper(graph) {
+function createChineseWhisper(graph, kind) {
   var api = {
     step: step,
     getClass: getClass,
@@ -59,7 +59,7 @@ function createChineseWhisper(graph) {
     var maxClassValue = 0;
     var maxClassName = -1;
 
-    graph.forEachLinkedNode(nodeId, updateMaxIfNeeded);
+    graph.forEachLinkedNode(nodeId, visitNeighbour);
 
     if (maxClassName === -1) {
       // the node didn't have any neighbours
@@ -68,10 +68,9 @@ function createChineseWhisper(graph) {
 
     return maxClassName;
 
-    function updateMaxIfNeeded(otherNode, link) {
-      // TODO: currently it assumes the graph is oriented.
-      if (link.toId === nodeId) {
-        var otherNodeClass = classMap.get(link.fromId);
+    function visitNeighbour(otherNode, link) {
+      if (shouldUpdate(link.toId === nodeId)) {
+        var otherNodeClass = classMap.get(otherNode.id);
         var counter = seenClasses.get(otherNodeClass) || 0;
         counter += 1;
         if (counter > maxClassValue) {
@@ -82,5 +81,11 @@ function createChineseWhisper(graph) {
         seenClasses.set(otherNodeClass, counter);
       }
     }
+  }
+
+  function shouldUpdate(isInLink) {
+    if (kind === 'in') return isInLink;
+    if (kind === 'out') return !isInLink;
+    return true;
   }
 }

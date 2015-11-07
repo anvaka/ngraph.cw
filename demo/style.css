@@ -5,3 +5,10 @@ body, svg {
   margin: 0;
   padding: 0;
 }
+
+a#step {
+  font-size: 24px;
+  margin: 10px;
+  position: absolute;
+  z-index: 1;
+}

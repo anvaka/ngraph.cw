@@ -30,7 +30,7 @@ function onStep(stepsCount) {
   }
   // Once change rate is close to 0, the algorithm has converged.
   console.log(whisper.getChangeRate() + '% nodes received a new class');
-  // Next iteration of renderNode() will use whisper.getLabel(node.id) and
+  // Next iteration of renderNode() will use whisper.getClass(node.id) and
   // will render it on the screen.
 }
 
@@ -55,11 +55,11 @@ function renderGraph(graph) {
   renderer.run();
 
   function renderNode(ui, pos, node) {
-    var currentLabel = whisper.getLabel(node.id);
-    if (ui.label !== currentLabel) {
-      ui.label = currentLabel;
-      ui.labelEl.text(currentLabel);
-      ui.circleEl.attr('fill', getColor(currentLabel));
+    var currentClass = whisper.getClass(node.id);
+    if (ui.label !== currentClass) {
+      ui.label = currentClass;
+      ui.labelEl.text(currentClass);
+      ui.circleEl.attr('fill', getColor(currentClass));
     }
     ui.attr('transform', 'translate(' + (pos.x ) + ',' + (pos.y) + ')');
   }
@@ -96,10 +96,10 @@ var createRandom = require('ngraph.random').random;
 
 module.exports = createChineseWhisper;
 
-function createChineseWhisper(graph) {
+function createChineseWhisper(graph, kind) {
   var api = {
     step: step,
-    getLabel: getLabel,
+    getClass: getClass,
     getChangeRate: getChangeRate
   };
 
@@ -124,7 +124,7 @@ function createChineseWhisper(graph) {
     return changeRate;
   }
 
-  function getLabel(nodeId) {
+  function getClass(nodeId) {
     return classMap.get(nodeId);
   }
 
@@ -152,7 +152,7 @@ function createChineseWhisper(graph) {
     var maxClassValue = 0;
     var maxClassName = -1;
 
-    graph.forEachLinkedNode(nodeId, updateMaxIfNeeded);
+    graph.forEachLinkedNode(nodeId, visitNeighbour);
 
     if (maxClassName === -1) {
       // the node didn't have any neighbours
@@ -161,10 +161,9 @@ function createChineseWhisper(graph) {
 
     return maxClassName;
 
-    function updateMaxIfNeeded(otherNode, link) {
-      // TODO: currently it assumes the graph is oriented.
-      if (link.toId === nodeId) {
-        var otherNodeClass = classMap.get(link.fromId);
+    function visitNeighbour(otherNode, link) {
+      if (shouldUpdate(link.toId === nodeId)) {
+        var otherNodeClass = classMap.get(otherNode.id);
         var counter = seenClasses.get(otherNodeClass) || 0;
         counter += 1;
         if (counter > maxClassValue) {
@@ -175,6 +174,12 @@ function createChineseWhisper(graph) {
         seenClasses.set(otherNodeClass, counter);
       }
     }
+  }
+
+  function shouldUpdate(isInLink) {
+    if (kind === 'in') return isInLink;
+    if (kind === 'out') return !isInLink;
+    return true;
   }
 }
 
