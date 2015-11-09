@@ -7,7 +7,8 @@ function createChineseWhisper(graph, kind) {
   var api = {
     step: step,
     getClass: getClass,
-    getChangeRate: getChangeRate
+    getChangeRate: getChangeRate,
+    forEachCluster: forEachCluster
   };
 
   var changeRate = 1;
@@ -87,5 +88,26 @@ function createChineseWhisper(graph, kind) {
     if (kind === 'in') return isInLink;
     if (kind === 'out') return !isInLink;
     return true;
+  }
+
+  function forEachCluster(cb) {
+    var clusters = new Map();
+
+    for (var i = 0; i < nodeIds.length; ++i) {
+      var nodeId = nodeIds[i];
+      var clusterId = getClass(nodeId);
+      var nodesInCluster = clusters.get(clusterId);
+      if (nodesInCluster) nodesInCluster.push(nodeId);
+      else clusters.set(clusterId, [nodeId]);
+    }
+
+    clusters.forEach(reportToClient);
+
+    function reportToClient(value, key) {
+      cb({
+        class: key,
+        nodes: value
+      });
+    }
   }
 }

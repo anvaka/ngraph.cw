@@ -49,6 +49,31 @@ var inDegreeWhisper = createWhisper(graph, 'in');
 var outDegreeWhisper = createWhisper(graph, 'out');
 ```
 
+## Iterating ove clusters
+
+So far we learned how to get class (or cluster) of every single node. `ngraph.cw`
+allows to do reverse operation too. This example shows how to iterate
+over each cluster and see nodes within:
+
+``` js
+var createWhisper = require('ngraph.cw');
+var whisper = createWhisper(graph);
+// assume we've done several iterations:
+while (whisper.getChangeRate() > 0) {
+  whisper.step();
+}
+
+whisper.forEachCluster(visitCluster);
+
+function visitCluster(cluster) {
+  // each cluster has class identifier:
+  assert(typeof cluster.class !== undefined);
+
+  // And list of nodes within cluster:
+  assert(Array.isArray(cluster.nodes));
+}
+```
+
 # install
 
 With [npm](https://npmjs.org) do:

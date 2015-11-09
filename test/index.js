@@ -34,3 +34,21 @@ test('it reduces change rate over time', function(t) {
 
   t.end();
 });
+
+test('it can iterate over clusters', function(t) {
+  var graph = createGraph();
+  var whisper = createWhisper(graph);
+
+  whisper.step();
+  whisper.step();
+  whisper.forEachCluster(verifyCluster);
+
+  t.end();
+
+  function verifyCluster(cluster) {
+    for (var i = 0; i < cluster.nodes.length; ++i) {
+      var nodeId = cluster.nodes[i];
+      t.equals(whisper.getClass(nodeId), cluster.class, 'Class for node ' + nodeId + ' is valid');
+    }
+  }
+});
