@@ -49,7 +49,7 @@ var inDegreeWhisper = createWhisper(graph, 'in');
 var outDegreeWhisper = createWhisper(graph, 'out');
 ```
 
-## Iterating ove clusters
+## Iterating over clusters
 
 So far we learned how to get class (or cluster) of every single node. `ngraph.cw`
 allows to do reverse operation too. This example shows how to iterate
