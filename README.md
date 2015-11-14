@@ -63,14 +63,17 @@ while (whisper.getChangeRate() > 0) {
   whisper.step();
 }
 
-whisper.forEachCluster(visitCluster);
+// clusters is a Set object
+var clusters = whisper.createClusterMap();
 
-function visitCluster(cluster) {
+cluster.forEach(visitCluster)
+
+function visitCluster(clusterNodes, clusterClass) {
   // each cluster has class identifier:
-  assert(typeof cluster.class !== undefined);
+  assert(typeof clusterClass !== undefined);
 
   // And list of nodes within cluster:
-  assert(Array.isArray(cluster.nodes));
+  assert(Array.isArray(clusterNodes));
 }
 ```
 

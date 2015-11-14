@@ -52,3 +52,22 @@ test('it can iterate over clusters', function(t) {
     }
   }
 });
+
+test('it can build clusters map', function(t) {
+  var graph = createGraph();
+  var whisper = createWhisper(graph);
+
+  whisper.step();
+  whisper.step();
+  var map = whisper.creeateClusterMap();
+  map.forEach(verifyCluster);
+
+  t.end();
+
+  function verifyCluster(clusterNodes, clusterClass) {
+    for (var i = 0; i < clusterNodes.length; ++i) {
+      var nodeId = clusterNodes[i];
+      t.equals(whisper.getClass(nodeId), clusterClass, 'Class for node ' + nodeId + ' is valid');
+    }
+  }
+});
