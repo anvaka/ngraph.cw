@@ -1,6 +1,6 @@
 {
   "name": "ngraph.cw",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Chinese Whispers Graph Clustering Algorithm",
   "main": "index.js",
   "scripts": {
