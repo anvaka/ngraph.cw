@@ -9,7 +9,7 @@ function createChineseWhisper(graph, kind) {
     getClass: getClass,
     getChangeRate: getChangeRate,
     forEachCluster: forEachCluster,
-    creeateClusterMap: creeateClusterMap
+    createClusterMap: createClusterMap
   };
 
   var changeRate = 1;
@@ -91,7 +91,7 @@ function createChineseWhisper(graph, kind) {
     return true;
   }
 
-  function creeateClusterMap() {
+  function createClusterMap() {
     var clusters = new Map();
 
     for (var i = 0; i < nodeIds.length; ++i) {
@@ -106,7 +106,7 @@ function createChineseWhisper(graph, kind) {
   }
 
   function forEachCluster(cb) {
-    var clusters = creeateClusterMap();
+    var clusters = createClusterMap();
 
     clusters.forEach(reportToClient);
 

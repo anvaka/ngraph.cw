@@ -59,7 +59,7 @@ test('it can build clusters map', function(t) {
 
   whisper.step();
   whisper.step();
-  var map = whisper.creeateClusterMap();
+  var map = whisper.createClusterMap();
   map.forEach(verifyCluster);
 
   t.end();
