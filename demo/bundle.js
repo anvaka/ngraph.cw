@@ -1,19 +1,18 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var colors = [
-  "#1f77b4", "#aec7e8",
-  "#ff7f0e", "#ffbb78",
-  "#2ca02c", "#98df8a",
-  "#d62728", "#ff9896",
-  "#9467bd", "#c5b0d5",
-  "#8c564b", "#c49c94",
-  "#e377c2", "#f7b6d2",
-  "#7f7f7f", "#c7c7c7",
-  "#bcbd22", "#dbdb8d",
-  "#17becf", "#9edae5"
+  '#1f77b4', '#aec7e8',
+  '#ff7f0e', '#ffbb78',
+  '#2ca02c', '#98df8a',
+  '#d62728', '#ff9896',
+  '#9467bd', '#c5b0d5',
+  '#8c564b', '#c49c94',
+  '#e377c2', '#f7b6d2',
+  '#7f7f7f', '#c7c7c7',
+  '#bcbd22', '#dbdb8d'
 ];
 
 function getColor(id) {
-  return colors[id % colors.length];
+  return colors[(id + 1) % colors.length];
 }
 
 module.exports = getColor;
@@ -100,7 +99,9 @@ function createChineseWhisper(graph, kind) {
   var api = {
     step: step,
     getClass: getClass,
-    getChangeRate: getChangeRate
+    getChangeRate: getChangeRate,
+    forEachCluster: forEachCluster,
+    createClusterMap: createClusterMap
   };
 
   var changeRate = 1;
@@ -180,6 +181,33 @@ function createChineseWhisper(graph, kind) {
     if (kind === 'in') return isInLink;
     if (kind === 'out') return !isInLink;
     return true;
+  }
+
+  function createClusterMap() {
+    var clusters = new Map();
+
+    for (var i = 0; i < nodeIds.length; ++i) {
+      var nodeId = nodeIds[i];
+      var clusterId = getClass(nodeId);
+      var nodesInCluster = clusters.get(clusterId);
+      if (nodesInCluster) nodesInCluster.push(nodeId);
+      else clusters.set(clusterId, [nodeId]);
+    }
+
+    return clusters;
+  }
+
+  function forEachCluster(cb) {
+    var clusters = createClusterMap();
+
+    clusters.forEach(reportToClient);
+
+    function reportToClient(value, key) {
+      cb({
+        class: key,
+        nodes: value
+      });
+    }
   }
 }
 

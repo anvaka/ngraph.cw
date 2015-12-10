@@ -4,7 +4,8 @@
   "description": "Chinese Whispers Graph Clustering Algorithm",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "tap test/*.js",
+    "demo": "browserify demo/index.js > demo/bundle.js"
   },
   "keywords": [
     "ngraph",
