@@ -6,9 +6,11 @@ body, svg {
   padding: 0;
 }
 
-a#step {
+.controls {
   font-size: 24px;
   margin: 10px;
   position: absolute;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 }

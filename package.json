@@ -21,7 +21,9 @@
     "url": "https://github.com/anvaka/ngraph.cw"
   },
   "devDependencies": {
+    "browserify": "^13.0.1",
     "miserables": "^1.0.0",
+    "ngraph.fromdot": "^0.1.6",
     "ngraph.svg": "0.0.15",
     "tap": "^2.2.0"
   },
